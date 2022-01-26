@@ -77,10 +77,10 @@ PRODUCT_PACKAGES += \
 
 # Audio
 PRODUCT_PACKAGES += \
-    android.hardware.audio@7.0-impl \
+    android.hardware.audio@6.0-impl:32 \
     android.hardware.soundtrigger@2.2-impl:32 \
     android.hardware.audio.effect@2.0-service \
-    android.hardware.audio.effect@7.0-impl \
+    android.hardware.audio.effect@6.0-impl:32 \
     android.hardware.audio.service \
     audio.primary.sdm710 \
     audio.a2dp.default \
@@ -135,7 +135,7 @@ PRODUCT_PACKAGES += \
 
 # Bluetooth
 PRODUCT_PACKAGES += \
-    android.hardware.bluetooth.audio@2.1-impl \
+    android.hardware.bluetooth.audio@2.0-impl:32 \
     audio.bluetooth.default \
     BluetoothResCommon \
     libbthost_if \
@@ -196,10 +196,12 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.crypto.volume.filenames_mode=aes-256-cts
 
+# Crypto
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.crypto.volume.filenames_mode=aes-256-cts
+
 # Display
 PRODUCT_PACKAGES += \
-    android.hardware.graphics.allocator@3.0-impl \
-    android.hardware.graphics.allocator@4.0-impl \
     android.hardware.graphics.composer@2.3-service \
     android.hardware.memtrack@1.0-impl \
     android.hardware.memtrack@1.0-service \
@@ -214,6 +216,7 @@ PRODUCT_PACKAGES += \
     hwcomposer.sdm710 \
     memtrack.sdm710 \
     vendor.display.config@1.0.vendor \
+    vendor.display.config@2.0.vendor \
     vendor.display.config@2.0 \
     vendor.display.config@2.0.vendor \
     libdisplayconfig.qti \
@@ -237,14 +240,13 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hardware.biometrics.fingerprint@2.1-service.realme_sdm710
 
-# FM
-PRODUCT_PACKAGES += \
-    FM2 \
-    qcom.fmradio
-
-# Freeform MultiWindow
+# Freeform Multiwindow
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.software.freeform_window_management.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.freeform_window_management.xml
+
+# Google Photos
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/pixel/pixel_2016_exclusive.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/sysconfig/pixel_2016_exclusive.xml
 
 # GPS
 PRODUCT_COPY_FILES += \
@@ -352,12 +354,9 @@ PRODUCT_PACKAGES += \
 
 # Power
 PRODUCT_PACKAGES += \
-    android.hardware.power-service.realme_sdm710-libperfmgr \
+    android.hardware.power-service \
     android.hardware.power.stats@1.0-service.mock \
     vendor.qti.hardware.perf@2.0.vendor
-
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/power-libperfmgr/sdm710_powerhint.json:$(TARGET_COPY_OUT_VENDOR)/etc/powerhint.json
 
 # Protobuf
 PRODUCT_PACKAGES += \
@@ -422,12 +421,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_SOONG_NAMESPACES += \
     $(LOCAL_PATH) \
     vendor/qcom/opensource/commonsys-intf/display \
-    vendor/qcom/opensource/wfd-commonsys \
-    hardware/google/interfaces \
-    hardware/google/pixel
-
-# Speed profile services and wifi-service to reduce RAM and storage.
-PRODUCT_SYSTEM_SERVER_COMPILER_FILTER := speed-profile
+    vendor/qcom/opensource/wfd-commonsys
 
 # Telephony
 PRODUCT_PACKAGES += \
@@ -449,19 +443,11 @@ PRODUCT_PACKAGES += \
 
 # Thermal
 PRODUCT_PACKAGES += \
-    android.hardware.thermal@2.0 \
-    android.hardware.thermal@2.0-service-qti
-
-# USB
-PRODUCT_PACKAGES += \
     android.hardware.usb@1.0-service.basic
-
 # Vibrator
 PRODUCT_PACKAGES += \
-    vendor.qti.hardware.vibrator.service.realme_sdm710
-
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/vibrator/excluded-input-devices.xml:$(TARGET_COPY_OUT_VENDOR)/etc/excluded-input-devices.xml
+    android.hardware.vibrator@1.0-impl:64 \
+    android.hardware.vibrator@1.0-service
 
 # VNDK-SP
 PRODUCT_PACKAGES += \
@@ -597,9 +583,6 @@ PRODUCT_PACKAGES += \
     android.hardware.neuralnetworks@1.1.vendor \
     android.hardware.neuralnetworks@1.2.vendor \
     android.hardware.neuralnetworks@1.3.vendor \
-    android.hardware.nfc@1.0.vendor \
-    android.hardware.nfc@1.1.vendor \
-    android.hardware.nfc@1.2.vendor \
     android.hardware.oemlock@1.0.vendor \
     android.hardware.power.stats@1.0.vendor \
     android.hardware.power@1.0.vendor \
